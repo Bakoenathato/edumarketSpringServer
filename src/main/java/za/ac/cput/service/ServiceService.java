@@ -1,4 +1,4 @@
 package za.ac.cput.service;
 
-public class LabourService {
+public class ServiceService {
 }
