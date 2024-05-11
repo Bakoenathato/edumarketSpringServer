@@ -1,4 +1,4 @@
-package za.ac.cput.service;
+package za.ac.cput.service.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import za.ac.cput.repository.AddressRepository;
 import java.util.List;
 
 @Service
-public class AddressService implements IAddressService{
+public class AddressService implements IAddressService {
 
     public AddressRepository addressRepository;
 

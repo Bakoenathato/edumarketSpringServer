@@ -1,4 +1,4 @@
-package za.ac.cput.service;
+package za.ac.cput.service.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import za.ac.cput.repository.UserRepository;
 import java.util.List;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     public AddressRepository addressRepository;
     public ContactRepository contactRepository;

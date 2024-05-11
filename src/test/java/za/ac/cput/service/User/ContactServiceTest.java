@@ -1,4 +1,4 @@
-package za.ac.cput.service;
+package za.ac.cput.service.User;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

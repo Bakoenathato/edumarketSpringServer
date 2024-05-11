@@ -1,4 +1,4 @@
-package za.ac.cput.service;
+package za.ac.cput.service.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import za.ac.cput.repository.ContactRepository;
 import java.util.List;
 
 @Service
-public class ContactService implements IContactService{
+public class ContactService implements IContactService {
 
     public ContactRepository contactRepository;
 

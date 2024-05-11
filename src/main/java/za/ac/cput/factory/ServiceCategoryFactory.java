@@ -5,7 +5,9 @@ import za.ac.cput.domain.ServiceCategory;
 import za.ac.cput.util.Helper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ServiceCategoryFactory {
 
@@ -19,7 +21,7 @@ public class ServiceCategoryFactory {
     }
 
     public static class ServiceCategoryBuilder {
-        private List<Service> services = new ArrayList<>();
+        private Set<Service> services = new HashSet<>();
 
         public ServiceCategoryBuilder service(Service service) {
             this.services.add(service);

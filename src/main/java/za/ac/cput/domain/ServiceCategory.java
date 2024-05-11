@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class ServiceCategory {
@@ -15,7 +17,7 @@ public class ServiceCategory {
     private String serviceCat_Name;
 
     @OneToMany(mappedBy = "serviceCategory")
-    private List<Service> services;
+    private Set<Service> services;
 
     protected ServiceCategory() {
 
@@ -24,7 +26,7 @@ public class ServiceCategory {
     private ServiceCategory(Builder builder) {
         this.serviceCat_id = builder.serviceCat_id;
         this.serviceCat_Name = builder.serviceCat_Name;
-        this.services = builder.services;
+        this.services = (Set<Service>) builder.services;
     }
 
     public int getServiceCat_id() {
@@ -35,7 +37,7 @@ public class ServiceCategory {
         return serviceCat_Name;
     }
 
-    public List<Service> getServices() {
+    public Set<Service> getServices() {
         return services;
     }
 
@@ -63,7 +65,7 @@ public class ServiceCategory {
     public static class Builder {
         private int serviceCat_id;
         private String serviceCat_Name;
-        private List<Service> services;
+        private Set<Service> services;
 
         public Builder setServiceCat_id(int serviceCat_id) {
             this.serviceCat_id = serviceCat_id;
@@ -75,7 +77,7 @@ public class ServiceCategory {
             return this;
         }
 
-        public Builder setServices(List<Service> services) {
+        public Builder setServices(Set<Service> services) {
             this.services = services;
             return this;
         }

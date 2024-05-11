@@ -26,14 +26,14 @@ public class Service {
 
     private Service(Builder builder) {
         this.serviceId = builder.serviceId;
-        this.serviceDescription = builder.serviceDescription;
         this.serviceName = builder.serviceName;
+        this.serviceDescription = builder.serviceDescription;
         this.servicePrice = builder.servicePrice;
         this.serviceStatus = builder.serviceStatus;
         this.serviceCategory = builder.serviceCategory;
     }
 
-    public int getserviceId() {
+    public int getServiceId() {
         return serviceId;
     }
 
@@ -120,7 +120,6 @@ public class Service {
         }
 
         public Builder copy(Service s) {
-
             return this;
         }
 
