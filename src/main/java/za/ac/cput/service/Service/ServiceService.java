@@ -21,7 +21,6 @@ public class ServiceService implements IServiceService {
 
     @Override
     public za.ac.cput.domain.Service create(za.ac.cput.domain.Service service){
-        serviceRepository.save(service);
         serviceCategoryRepository.save(service.getServiceCategory());
         return serviceRepository.save(service);
     }
