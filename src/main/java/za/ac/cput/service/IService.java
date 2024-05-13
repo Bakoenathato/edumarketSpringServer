@@ -8,3 +8,4 @@ public interface IService <T,ID> {
 
     T update(T t);
 }
+
