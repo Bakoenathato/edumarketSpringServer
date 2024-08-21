@@ -83,6 +83,9 @@ public class ServiceCategory {
         }
 
         public Builder copy(ServiceCategory serviceCategory) {
+            this.serviceCat_id = serviceCategory.getServiceCat_id();
+            this.serviceCat_Name = serviceCategory.getServiceCat_Name();
+            this.services = serviceCategory.getServices();
             return this;
         }
 
