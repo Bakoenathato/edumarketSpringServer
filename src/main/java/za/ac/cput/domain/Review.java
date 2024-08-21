@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
     private String content;
     private String timeStamp;

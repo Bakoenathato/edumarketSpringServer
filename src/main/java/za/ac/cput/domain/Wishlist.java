@@ -47,37 +47,59 @@ public class Wishlist {
         return dateAdded;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Wishlist wishlist)) return false;
+        return Objects.equals(getWishId(), wishlist.getWishId()) && Objects.equals(getBuyer(), wishlist.getBuyer()) && Objects.equals(getProducts(), wishlist.getProducts()) && Objects.equals(getDateAdded(), wishlist.getDateAdded());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getWishId(), getBuyer(), getProducts(), getDateAdded());
+    }
+
+    @Override
+    public String toString() {
+        return "Wishlist{" +
+                "wishId=" + wishId +
+                ", buyer=" + buyer +
+                ", products=" + products +
+                ", dateAdded=" + dateAdded +
+                '}';
+    }
+
     public static class Builder {
         private Long wishId;
         private User buyer;
         private Set<Product> products = new HashSet<>();
         private Date dateAdded;
 
-        public Builder wishId(Long wishId) {
+        public Builder setWishId(Long wishId) {
             this.wishId = wishId;
             return this;
         }
 
-        public Builder buyer(User buyer) {
+        public Builder setBuyer(User buyer) {
             this.buyer = buyer;
             return this;
         }
 
-        public Builder products(Set<Product> product) {
+        public Builder setProducts(Set<Product> products) {
             this.products = products;
             return this;
         }
 
-        public Builder dateAdded(Date dateAdded) {
+        public Builder setDateAdded(Date dateAdded) {
             this.dateAdded = dateAdded;
             return this;
         }
 
         public Builder copy(Wishlist wishlist) {
-            this.wishId = wishlist.getWishId();
-            this.buyer = wishlist.getBuyer();
-            this.products = wishlist.getProducts();
-            this.dateAdded = wishlist.getDateAdded();
+            this.wishId = wishlist.wishId;
+            this.buyer = wishlist.buyer;
+            this.products = wishlist.products;
+            this.dateAdded = wishlist.dateAdded;
             return this;
         }
 

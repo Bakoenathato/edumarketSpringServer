@@ -16,11 +16,7 @@ public class Helper {
         return UUID.randomUUID().toString();
     }
 
-//    public static boolean isZero(int id){
-//        if (id == 0)
-//            return true;
-//        return false;
-//    }
+
 
     public static boolean isDouble(String str) {
         try {

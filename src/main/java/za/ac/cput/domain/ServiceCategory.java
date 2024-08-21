@@ -26,7 +26,7 @@ public class ServiceCategory {
     private ServiceCategory(Builder builder) {
         this.serviceCat_id = builder.serviceCat_id;
         this.serviceCat_Name = builder.serviceCat_Name;
-        this.services = (Set<Service>) builder.services;
+        this.services = builder.services;
     }
 
     public int getServiceCat_id() {

@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int serviceId;
     private String serviceName;
     private String serviceDescription;
