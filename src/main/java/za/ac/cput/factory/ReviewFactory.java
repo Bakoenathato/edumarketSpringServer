@@ -1,18 +1,21 @@
 package za.ac.cput.factory;
 
+import za.ac.cput.domain.Product;
 import za.ac.cput.domain.Review;
+import za.ac.cput.domain.User;
+import za.ac.cput.util.Helper;
 
 public class ReviewFactory {
-    public static Review buildReview(int reviewId, String content, String timeStamp, String productId, String userId) {
-        if (reviewId <= 0 || Helper.isEmpty(content) || Helper.isEmpty(timeStamp) || Helper.isEmpty(productId) || Helper.isEmpty(userId)) {
+    public static Review buildReview(int reviewId, String content, String timeStamp, User buyer, Product product) {
+        if (reviewId <= 0 || Helper.isNullOrEmpty(content) || Helper.isNullOrEmpty(timeStamp) || buyer == null || product == null) {
             return null;
         }
         return new Review.Builder()
                 .setReviewId(reviewId)
                 .setContent(content)
                 .setTimeStamp(timeStamp)
-                .setProductId(productId)
-                .setUserId(userId)
+                .setBuyer(buyer)
+                .setProduct(product)
                 .build();
     }
 }

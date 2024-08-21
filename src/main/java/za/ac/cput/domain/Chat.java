@@ -62,7 +62,7 @@ public class Chat {
                 '}';
     }
 
-    private static class Builder {
+    public static class Builder {
         private long chatId;
         private Set<User> participants = new HashSet<>();
         private Set<Message> messages = new HashSet<>();

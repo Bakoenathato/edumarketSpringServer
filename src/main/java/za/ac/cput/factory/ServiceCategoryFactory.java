@@ -11,21 +11,14 @@ import java.util.Set;
 
 public class ServiceCategoryFactory {
 
-    public static ServiceCategory buildServiceCategory(int serviceCat_id, String serviceCat_name) {
-        if(Helper.isZero(serviceCat_id) || Helper.isNullOrEmpty(serviceCat_name))
+    public static ServiceCategory buildServiceCategory(int serviceCat_id, String serviceCat_name, Set<Service> services) {
+        if(Helper.isZero(serviceCat_id) || Helper.isNullOrEmpty(serviceCat_name) || services == null)
             return null;
         return new ServiceCategory.Builder()
                 .setServiceCat_id(serviceCat_id)
                 .setServiceCat_Name(serviceCat_name)
+                .setServices(services)
                 .build();
     }
 
-    public static class ServiceCategoryBuilder {
-        private Set<Service> services = new HashSet<>();
-
-        public ServiceCategoryBuilder service(Service service) {
-            this.services.add(service);
-            return this;
-        }
-    }
 }
