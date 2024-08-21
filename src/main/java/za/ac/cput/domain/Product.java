@@ -1,8 +1,7 @@
 package za.ac.cput.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.sql.Blob;
@@ -14,20 +13,30 @@ import java.util.Objects;
 @Entity
 public class Product implements Serializable {
     @Id
-    private String product_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long product_id;
+
     private String product_name;
     private String product_des;
     private double product_price;
     private String product_condition;
     private String product_status;
-    private Clob product_image;
+
+    @Lob
+    private Blob product_image;
+
     private LocalDateTime product_timestamp;
-    private String product_category_id;
-    private String user_id;
 
-protected Product(){
+    @OneToOne(mappedBy = "category_id")
+    private ProductCategory product_category;
 
-}
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User user;
+
+    protected Product(){
+
+    }
 
     private Product(Builder builder) {
         this.product_id = builder.product_id;
@@ -38,12 +47,11 @@ protected Product(){
         this.product_status = builder.product_status;
         this.product_image = builder.product_image;
         this.product_timestamp = builder.product_timestamp;
-//        this.product_category_id = product_category_id;
-//        this.user_id = user_id;
+        this.product_category = builder.product_category;
     }
 
 
-    public String getProudct_id() {
+    public long getProduct_id() {
         return product_id;
     }
 
@@ -67,7 +75,7 @@ protected Product(){
         return product_status;
     }
 
-    public Clob getProduct_image() {
+    public Blob getProduct_image() {
         return product_image;
     }
 
@@ -75,23 +83,30 @@ protected Product(){
         return product_timestamp;
     }
 
+    public ProductCategory getProduct_category() {
+        return product_category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Double.compare(product_price, product.product_price) == 0 && Objects.equals(product_id, product.product_id) && Objects.equals(product_name, product.product_name) && Objects.equals(product_des, product.product_des) && Objects.equals(product_condition, product.product_condition) && Objects.equals(product_status, product.product_status) && Objects.equals(product_image, product.product_image) && Objects.equals(product_timestamp, product.product_timestamp) && Objects.equals(product_category_id, product.product_category_id) && Objects.equals(user_id, product.user_id);
+        if (!(o instanceof Product product)) return false;
+        return getProduct_id() == product.getProduct_id() && Double.compare(getProduct_price(), product.getProduct_price()) == 0 && Objects.equals(getProduct_name(), product.getProduct_name()) && Objects.equals(getProduct_des(), product.getProduct_des()) && Objects.equals(getProduct_condition(), product.getProduct_condition()) && Objects.equals(getProduct_status(), product.getProduct_status()) && Objects.equals(getProduct_image(), product.getProduct_image()) && Objects.equals(getProduct_timestamp(), product.getProduct_timestamp()) && Objects.equals(getProduct_category(), product.getProduct_category()) && Objects.equals(getUser(), product.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(product_id, product_name, product_des, product_price, product_condition, product_status, product_image, product_timestamp, product_category_id, user_id);
+        return Objects.hash(getProduct_id(), getProduct_name(), getProduct_des(), getProduct_price(), getProduct_condition(), getProduct_status(), getProduct_image(), getProduct_timestamp(), getProduct_category(), getUser());
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "proudct_id='" + product_id + '\'' +
+                "product_id=" + product_id +
                 ", product_name='" + product_name + '\'' +
                 ", product_des='" + product_des + '\'' +
                 ", product_price=" + product_price +
@@ -99,26 +114,29 @@ protected Product(){
                 ", product_status='" + product_status + '\'' +
                 ", product_image=" + product_image +
                 ", product_timestamp=" + product_timestamp +
-                ", product_category_id='" + product_category_id + '\'' +
-                ", user_id='" + user_id + '\'' +
+                ", product_category=" + product_category +
+                ", user=" + user +
                 '}';
     }
+
     public static class Builder{
-        @Id
-        private String product_id;
+
+        private long product_id;
         private String product_name;
         private String product_des;
         private double product_price;
         private String product_condition;
         private String product_status;
-        private Clob product_image;
+        private Blob product_image;
         private LocalDateTime product_timestamp;
-//        private String product_category_id;
-//        private String user_id;
-public Builder setProudct_id(String product_id) {
-    this.product_id=product_id;
-    return this;
-}
+        private ProductCategory product_category;
+        private User user;
+
+
+        public Builder setProduct_id(long product_id) {
+            this.product_id = product_id;
+            return this;
+        }
 
         public Builder setProduct_name(String product_name) {
             this.product_name=product_name;
@@ -145,7 +163,7 @@ public Builder setProudct_id(String product_id) {
             return this;
         }
 
-        public Builder setProduct_image(Clob product_image) {
+        public Builder setProduct_image(Blob product_image) {
             this.product_image=product_image;
             return this;
         }
@@ -154,6 +172,17 @@ public Builder setProudct_id(String product_id) {
             this.product_timestamp=product_timestamp;
             return this;
         }
+
+        public Builder setProduct_category(ProductCategory product_category) {
+            this.product_category = product_category;
+            return this;
+        }
+
+        public Builder setUser(User user) {
+            this.user = user;
+            return this;
+        }
+
         public Builder copy(Product n) {
             this.product_id = n.product_id;
             this.product_name = n.product_name;
@@ -163,6 +192,8 @@ public Builder setProudct_id(String product_id) {
             this.product_status = n.product_status;
             this.product_image = n.product_image;
             this.product_timestamp = n.product_timestamp;
+            this.product_category = n.product_category;
+            this.user = n.user;
             return this;
         }
         public Product build(){return new Product(this);}

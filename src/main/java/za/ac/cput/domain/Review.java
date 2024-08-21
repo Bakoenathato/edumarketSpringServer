@@ -1,9 +1,9 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Objects;
+
 @Entity
 public class Review {
     @Id
@@ -11,18 +11,25 @@ public class Review {
     private int reviewId;
     private String content;
     private String timeStamp;
-    private String productId;
-    private String userId;
+
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     protected Review(){
 
     }
-    private Review(Builder build){
+
+    private Review(Builder builder){
         this.reviewId = builder.reviewId;
         this.content = builder.content;
         this.timeStamp = builder.timeStamp;
-        this.productId = builder.productId;
-        this.userId = builder.userId;
+        this.buyer = builder.buyer;
+        this.product = builder.product;
     }
 
     public int getReviewId() {
@@ -37,28 +44,24 @@ public class Review {
         return timeStamp;
     }
 
-    public String getProductId() {
-        return productId;
+    public User getBuyer() {
+        return buyer;
     }
 
-    public String getUserId() {
-        return userId;
+    public Product getProduct() {
+        return product;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Review)) return false;
-        Review review = (Review) o;
-        return getReviewId() == review.getReviewId() &&
-                Objects.equals(getContent(), review.getContent()) &&
-                Objects.equals(getTimeStamp(), review.getTimeStamp()) &&
-                Objects.equals(getProductId(), review.getProductId()) &&
-                Objects.equals(getUserId(), review.getUserId());
+        if (!(o instanceof Review review)) return false;
+        return getReviewId() == review.getReviewId() && Objects.equals(getContent(), review.getContent()) && Objects.equals(getTimeStamp(), review.getTimeStamp()) && Objects.equals(getBuyer(), review.getBuyer()) && Objects.equals(getProduct(), review.getProduct());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReviewId(), getContent(), getTimeStamp(), getProductId(), getUserId());
+        return Objects.hash(getReviewId(), getContent(), getTimeStamp(), getBuyer(), getProduct());
     }
 
     @Override
@@ -67,16 +70,17 @@ public class Review {
                 "reviewId=" + reviewId +
                 ", content='" + content + '\'' +
                 ", timeStamp='" + timeStamp + '\'' +
-                ", productId='" + productId + '\'' +
-                ", userId='" + userId + '\'' +
+                ", buyer=" + buyer +
+                ", product=" + product +
                 '}';
     }
+
     public static class Builder {
         private int reviewId;
         private String content;
         private String timeStamp;
-        private String productId;
-        private String userId;
+        private User buyer;
+        private Product product;
 
         public Builder setReviewId(int reviewId) {
             this.reviewId = reviewId;
@@ -93,13 +97,13 @@ public class Review {
             return this;
         }
 
-        public Builder setProductId(String productId) {
-            this.productId = productId;
+        public Builder setBuyer(User buyer) {
+            this.buyer = buyer;
             return this;
         }
 
-        public Builder setUserId(String userId) {
-            this.userId = userId;
+        public Builder setProduct(Product product) {
+            this.product = product;
             return this;
         }
 
@@ -107,8 +111,8 @@ public class Review {
             this.reviewId = review.reviewId;
             this.content = review.content;
             this.timeStamp = review.timeStamp;
-            this.productId = review.productId;
-            this.userId = review.userId;
+            this.buyer = review.buyer;
+            this.product = review.product;
             return this;
         }
 

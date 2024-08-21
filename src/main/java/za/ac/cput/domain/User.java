@@ -1,7 +1,7 @@
 package za.ac.cput.domain;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.*;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,6 +25,19 @@ public class User
     @OneToOne
     private Address userAddress;
 
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Wishlist> wishlistList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer")
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Product> products = new HashSet<>();
+
+    @ManyToMany(mappedBy = "participants")
+    private Set<Chat> chats = new HashSet<>();
+
+
     @CreatedDate
     private LocalDateTime dateCreated;
 
@@ -42,6 +55,10 @@ public class User
         this.userPassword = builder.userPassword;
         this.userContact = builder.userContact;
         this.userAddress = builder.userAddress;
+        this.wishlistList = builder.wishlistList;
+        this.reviews = builder.reviews;
+        this.products = builder.products;
+
         this.dateCreated = builder.dateCreated;
         this.dateUpdated = builder.dateUpdated;
     }
@@ -74,6 +91,22 @@ public class User
         return userAddress;
     }
 
+    public List<Wishlist> getWishlistList() {
+        return wishlistList;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public Set<Chat> getChats() {
+        return chats;
+    }
+
     public LocalDateTime getDateCreated() {
         return dateCreated;
     }
@@ -86,24 +119,28 @@ public class User
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return Objects.equals(userId, user.userId) && Objects.equals(userFName, user.userFName) && Objects.equals(userLName, user.userLName) && Objects.equals(userRole, user.userRole) && Objects.equals(userPassword, user.userPassword) && Objects.equals(userContact, user.userContact) && Objects.equals(userAddress, user.userAddress) && Objects.equals(dateCreated, user.dateCreated) && Objects.equals(dateUpdated, user.dateUpdated);
+        return getUserId() == user.getUserId() && Objects.equals(getUserFName(), user.getUserFName()) && Objects.equals(getUserLName(), user.getUserLName()) && Objects.equals(getUserRole(), user.getUserRole()) && Objects.equals(getUserPassword(), user.getUserPassword()) && Objects.equals(getUserContact(), user.getUserContact()) && Objects.equals(getUserAddress(), user.getUserAddress()) && Objects.equals(getWishlistList(), user.getWishlistList()) && Objects.equals(getReviews(), user.getReviews()) && Objects.equals(getProducts(), user.getProducts()) && Objects.equals(getChats(), user.getChats()) && Objects.equals(getDateCreated(), user.getDateCreated()) && Objects.equals(getDateUpdated(), user.getDateUpdated());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, userFName, userLName, userRole, userPassword, userContact, userAddress, dateCreated, dateUpdated);
+        return Objects.hash(getUserId(), getUserFName(), getUserLName(), getUserRole(), getUserPassword(), getUserContact(), getUserAddress(), getWishlistList(), getReviews(), getProducts(), getChats(), getDateCreated(), getDateUpdated());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId='" + userId + '\'' +
+                "userId=" + userId +
                 ", userFName='" + userFName + '\'' +
                 ", userLName='" + userLName + '\'' +
                 ", userRole='" + userRole + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userContact=" + userContact +
                 ", userAddress=" + userAddress +
+                ", wishlistList=" + wishlistList +
+                ", reviews=" + reviews +
+                ", products=" + products +
+                ", chats=" + chats +
                 ", dateCreated=" + dateCreated +
                 ", dateUpdated=" + dateUpdated +
                 '}';
@@ -118,6 +155,10 @@ public class User
         private String userPassword;
         private Contact userContact;
         private Address userAddress;
+        private List<Wishlist> wishlistList = new ArrayList<>();
+        private Set<Review> reviews = new HashSet<>();
+        private Set<Product> products = new HashSet<>();
+        private Set<Chat> chats = new HashSet<>();
         private LocalDateTime dateCreated;
         private LocalDateTime dateUpdated;
 
@@ -157,6 +198,26 @@ public class User
             return this;
         }
 
+        public Builder setWishlistList(List<Wishlist> wishlistList) {
+            this.wishlistList = wishlistList;
+            return this;
+        }
+
+        public Builder setReviews(Set<Review> reviews) {
+            this.reviews = reviews;
+            return this;
+        }
+
+        public Builder setProducts(Set<Product> products) {
+            this.products = products;
+            return this;
+        }
+
+        public Builder setChats(Set<Chat> chats) {
+            this.chats = chats;
+            return this;
+        }
+
         public Builder setDateCreated(LocalDateTime dateCreated) {
             this.dateCreated = dateCreated;
             return this;
@@ -175,6 +236,10 @@ public class User
             this.userPassword = user.userPassword;
             this.userContact = user.userContact;
             this.userAddress = user.userAddress;
+            this.wishlistList = user.wishlistList;
+            this.reviews = user.reviews;
+            this.products = user.products;
+            this.chats = user.chats;
             this.dateCreated = user.dateCreated;
             this.dateUpdated = user.dateUpdated;
             return this;

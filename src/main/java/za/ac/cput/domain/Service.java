@@ -119,7 +119,13 @@ public class Service {
             return this;
         }
 
-        public Builder copy(Service s) {
+        public Builder copy(Service service) {
+            this.serviceId = service.getServiceId();
+            this.serviceName = service.getServiceName();
+            this.serviceDescription = service.getServiceDescription();
+            this.servicePrice = service.getServicePrice();
+            this.serviceStatus = service.getServiceStatus();
+            this.serviceCategory = service.getServiceCategory();
             return this;
         }
 
